@@ -12,6 +12,12 @@ export default function Home() {
           height={38}
           priority
         />
+        <button
+          className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
+          Button
+        </button>
+        <button className="btn w-64 rounded-full">Button</button>
+        <button className="btn btn-primary">Button</button>
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}

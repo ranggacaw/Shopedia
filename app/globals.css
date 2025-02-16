@@ -1,21 +1,13 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Apply custom fonts to specific classes */
+.font-logo {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 700;
 }
