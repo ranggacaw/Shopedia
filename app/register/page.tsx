@@ -1,5 +1,6 @@
 "use client"
 
+import FollowMouse from '@/components/FollowMouse';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -46,7 +47,8 @@ const Register: React.FC = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-base-200">
+        <div className="flex items-center justify-center min-h-screen bg-base-100">
+            <FollowMouse />
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                     <h2 className="card-title text-2xl font-bold text-center mb-4">Create an Account</h2>
