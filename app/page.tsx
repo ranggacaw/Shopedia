@@ -1,107 +1,96 @@
-import Image from "next/image";
+import React from "react";
+import HomeLayout from "./dashboard/homewrapper";
+import Link from "next/link";
+import { FaHome, FaLaptop, FaTshirt } from "react-icons/fa";
+import { TbPerfume } from "react-icons/tb";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <button
-          className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
-          Button
-        </button>
-        <button className="btn w-64 rounded-full">Button</button>
-        <button className="btn btn-primary">Button</button>
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+const HomePage: React.FC = () => {
+    const categories = [
+        { name: "Electronics", icon: <FaLaptop className="w-6 h-5 mb-1" /> },
+        { name: "Clothing", icon: <FaTshirt className="w-6 h-5 mb-1" /> },
+        { name: "Home & Kitchen", icon: <FaHome className="w-6 h-5 mb-1" /> },
+        { name: "Fragrance", icon: <TbPerfume className="w-6 h-5 mb-1" /> },
+    ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
-}
+    return (
+        <HomeLayout>
+            {/* Hero Section */}
+            <section className="bg-base-200 py-16 bg-[url('https://cdn.prod.website-files.com/605826c62e8de87de744596e/63f5e30a4d577354fdfce512_Duotone-Master-ssssFile-copy.jpg')] bg-cover bg-no-repeat bg-center">
+                <div className="container mx-auto text-center">
+                    <h2 className="text-5xl font-bold mb-4 text-slate-200">Welcome to Shopedia</h2>
+                    <p className="text-lg mb-8 text-slate-200">Your one-stop shop for the best products at the best prices.</p>
+                    {/* <button className="btn btn-primary">Shop Now</button> */}
+                    
+                    <a className="group relative inline-block focus:ring-3 focus:outline-hidden" href="#">
+                        <span
+                            className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+                        ></span>
+
+                        <span
+                            className="relative inline-block border-2 border-current px-8 py-3 text-sm font-bold tracking-widest text-black uppercase"
+                        >
+                            Shop Now
+                        </span>
+                    </a>
+                </div>
+            </section>
+
+            {/* Featured Products */}
+            <section className="container mx-auto py-16">
+                <h3 className="text-3xl font-bold text-center mb-8">Featured Products</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[1, 2, 3].map((product) => (
+                    <div 
+                        key={product} 
+                        className="card bg-base-100 shadow-md"
+                    >
+                        <figure className="px-4 pt-4">
+                            <img
+                                src="https://placehold.co/300"
+                                alt="Product"
+                                className="rounded-xl"
+                            />
+                        </figure>
+                        <div className="card-body">
+                            <h4 className="card-title">Product {product}</h4>
+                            <p className="text-gray-500">115.000 IDR</p>
+                            <div className="card-actions justify-end">
+                                <button className="btn btn-primary">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+                </div>
+            </section>
+
+            {/* Categories */}
+            <section className="bg-base-100 py-16">
+                <div className="container mx-auto text-center">
+                    <h3 className="text-3xl font-bold mb-8">Shop by Category</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {categories.map((category) => (
+                        <Link
+                            key={category.name}
+                            href={`/category/${category.name.toLowerCase().replace(/ /g, "-")}`}
+                            className="card border-2 border-base-200 transition-all duration-200 shadow-sm hover:shadow-md"
+                        >
+                            <div className="card-body p-3">
+                                <div className="flex flex-col items-center justify-center space-y-2">
+                                    <div className="text-accent">
+                                        {category.icon}
+                                    </div>
+                                    <span className="text-base font-semibold text-center text-base-content">
+                                        {category.name}
+                                    </span>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                    </div>
+                </div>
+            </section>
+        </HomeLayout>
+    );
+};
+
+export default HomePage;

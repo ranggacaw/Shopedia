@@ -1,177 +1,207 @@
-"use client"
+"use client";
 
 import Header from "@/components/Header";
-import { useState } from "react";
-import { FaUser, FaEnvelope, FaPhone, FaEdit, FaTimes } from "react-icons/fa";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
+// Define User Type
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  phone?: string;
+}
 
 const ProfilePage = () => {
-    const [isEditing, setIsEditing] = useState(false);
+  
+  const { id } = useParams();
+  const userId = Number(id); // Convert to number
+  const router = useRouter();
 
-    // State user data
-    const [user, setUser] = useState({
-        name: "John Doe",
-        email: "john.doe@example.com",
-        phone: "+1 (123) 456-7890",
-    });
+  const [token, setToken] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [editedUser, setEditedUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null); // Error state
 
-    // State edited data
-    const [editedUser, setEditedUser] = useState({ ...user });
+  // Fetch token and user data
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (!storedToken) {
+      setError("Authentication token not found. Please log in.");
+      setLoading(false);
+      return;
+    }
 
-    // Handle input changes
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setEditedUser((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+    setToken(storedToken);
+
+    if (isNaN(userId)) {
+      setError("Invalid user ID.");
+      setLoading(false);
+      console.error("Invalid user ID:", id);
+      return;
+    }
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/auth/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch user details");
+
+        const data: User = await response.json();
+        setUser(data);
+        setEditedUser(data);
+      } catch (err) {
+        setError("Failed to load user details.");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Handle edit button click
-    const handleEditClick = () => {
-        setEditedUser({ ...user }); // Reset edited data to current user data
-        setIsEditing(true);
-    };
+    fetchUser();
+  }, [userId]);
 
-    const handleCancelClick = () => {
-        setIsEditing(false);
-    };
+  // Handle input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!editedUser) return;
+    const { name, value } = e.target;
+    setEditedUser({ ...editedUser, [name]: value });
+  };
 
-    // Handle save button click
-    const handleSaveClick = () => {
-        setUser({ ...editedUser }); // Update user data
-        setIsEditing(false);
+  // Save updated user details
+  const handleSaveClick = async () => {
+    if (!token || !editedUser) return;
 
-        console.log("Updated User Data:", editedUser);
-    };
+    try {
+      const response = await fetch(`http://localhost:3001/auth/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(editedUser),
+      });
 
-    return (
-        <>
-            <Header/>
+      if (!response.ok) throw new Error("Failed to update user details");
 
-            <div className="container mx-auto p-6">
-                {/* Profile Header */}
-                <section className="text-center py-8">
-                    <h1 className="text-4xl font-bold mb-4">Profile</h1>
-                    <p className="text-lg text-gray-600">
-                        Manage your profile information and keep it up to date.
-                    </p>
-                </section>
+      const updatedUser: User = await response.json();
+      setUser(updatedUser);
+      setIsEditing(false);
 
-                {/* Profile Form */}
-                <section className="max-w-2xl mx-auto">
-                    <div className="card border border-base-300 shadow-sm p-6">
-                        {/* Name */}
-                        <div className="form-control mb-6">
-                            <label className="label">
-                                <span className="label-text flex items-center">
-                                    Name
-                                </span>
-                            </label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={editedUser.name}
-                                    onChange={handleInputChange}
-                                    className="input input-bordered w-full"
-                                />
-                            ) : (
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={user.name}
-                                    className="input input-bordered w-full"
-                                    readOnly
-                                />
-                            )}
-                        </div>
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "User details updated successfully!",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update user details",
+      });
+    }
+  };
 
-                        {/* Email */}
-                        <div className="form-control mb-6">
-                            <label className="label">
-                                <span className="label-text flex items-center">
-                                    Email
-                                </span>
-                            </label>
-                            {isEditing ? (
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={editedUser.email}
-                                    onChange={handleInputChange}
-                                    className="input input-bordered w-full"
-                                />
-                            ) : (
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={user.email}
-                                    className="input input-bordered w-full"
-                                    readOnly
-                                />
-                            )}
-                        </div>
+  // Cancel editing and reset form
+  const handleCancelClick = () => {
+    setEditedUser(user);
+    setIsEditing(false);
+  };
 
-                        {/* Phone */}
-                        <div className="form-control mb-6">
-                            <label className="label">
-                                <span className="label-text flex items-center">
-                                    Phone
-                                </span>
-                            </label>
-                            {isEditing ? (
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={editedUser.phone}
-                                    onChange={handleInputChange}
-                                    className="input input-bordered w-full"
-                                />
-                            ) : (
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={user.phone}
-                                    className="input input-bordered w-full"
-                                    readOnly
-                                />
-                            )}
-                        </div>
+  // Loading state
+  if (loading) return <div>Loading...</div>;
 
-                        {/* Edit/Cancel/Save Buttons */}
-                        <div className="flex justify-end space-x-4">
-                            {isEditing ? (
-                                <>
-                                    <button
-                                        type="button"
-                                        onClick={handleCancelClick}
-                                        className="btn btn-ghost"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={handleSaveClick}
-                                        className="btn btn-primary"
-                                    >
-                                        Save
-                                    </button>
-                                </>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={handleEditClick}
-                                    className="btn btn-outline btn-primary"
-                                >
-                                    Edit Profile
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                </section>
+  // Error state
+  if (error) {
+    return <div className="text-center text-red-500">{error}</div>;
+  }
+
+  // User data loaded successfully
+  return (
+    <>
+      <Header />
+
+      <div className="container mx-auto p-6">
+        <section className="text-center py-8">
+          <h1 className="text-4xl font-bold mb-4">Profile</h1>
+          <p className="text-lg text-gray-600">
+            Manage your profile information and keep it up to date.
+          </p>
+        </section>
+
+        <section className="max-w-2xl mx-auto">
+          <div className="card border border-base-300 shadow-sm p-6">
+            {/* Name */}
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                name="username"
+                value={editedUser?.username || ""}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                readOnly={!isEditing}
+              />
             </div>
-        </>
-    );
+
+            {/* Email */}
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={editedUser?.email || ""}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                readOnly={!isEditing}
+              />
+            </div>
+
+            {/* Phone */}
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text">Phone</span>
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={editedUser?.phone || ""}
+                onChange={handleInputChange}
+                className="input input-bordered w-full"
+                readOnly={!isEditing}
+              />
+            </div>
+
+            {/* Buttons */}
+            <div className="flex justify-end space-x-4">
+              {isEditing ? (
+                <>
+                  <button onClick={handleCancelClick} className="btn btn-ghost">
+                    Cancel
+                  </button>
+                  <button onClick={handleSaveClick} className="btn btn-primary">
+                    Save
+                  </button>
+                </>
+              ) : (
+                <button onClick={() => setIsEditing(true)} className="btn btn-outline btn-primary">
+                  Edit Profile
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
 };
 
 export default ProfilePage;
