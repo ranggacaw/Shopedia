@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState } from 'react'
-import { CgSearch } from "react-icons/cg";
 import { BiFilter } from "react-icons/bi";
 import Header from '@/components/Header';
 import products from '@/data/shopdata'
+import Link from 'next/link';
 
 
 const ShopPage = () => {
@@ -37,7 +37,8 @@ const ShopPage = () => {
                                 className="grow" 
                                 placeholder="Search products..."
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)} />
+                                onChange={(e) => setSearchQuery(e.target.value)} 
+                            />
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 16 16"
@@ -91,15 +92,16 @@ const ShopPage = () => {
                 {/* Product Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {filteredProducts.map((product) => (
-                       <div 
+                       <Link 
                             key={product.id} 
                             className="card bg-base-100 shadow-sm hover:shadow-md transition-shadow duration-200"
+                            href={`http://localhost:3000/item-details/1`}
                         >
                             <figure className="px-4 pt-4">
                                 <img
                                     src={product.image}
                                     alt={product.name}
-                                    className="rounded-xl h-48 w-full object-cover"
+                                    className="rounded-xl w-full aspect-square object-cover"
                                 />
                             </figure>
                             
@@ -113,7 +115,7 @@ const ShopPage = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

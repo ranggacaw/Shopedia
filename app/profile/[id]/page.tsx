@@ -73,15 +73,16 @@ const ProfilePage = () => {
     };
 
     // Save updated user details
-    const handleSaveClick = async () => {
+    const handleSave = async () => {
         if (!token || !editedUser) return;
 
         try {
-            const response = await fetch(`http://localhost:3001/auth/${userId}`, {
+            const response = await fetch(`http://localhost:3001/auth/${userId}`, 
+            {
                 method: "PUT",
                 headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(editedUser),
             });
@@ -126,77 +127,77 @@ const ProfilePage = () => {
             <Header />
             <div className="container mx-auto p-6">
                 <section className="text-center py-8">
-                <h1 className="text-4xl font-bold mb-4">Profile</h1>
-                <p className="text-lg text-gray-600">
-                    Manage your profile information and keep it up to date.
-                </p>
+                    <h1 className="text-4xl font-bold mb-4">Profile</h1>
+                    <p className="text-lg text-gray-600">
+                        Manage your profile information and keep it up to date.
+                    </p>
                 </section>
 
                 <section className="max-w-2xl mx-auto">
-                <div className="card border border-base-300 shadow-sm p-6">
-                    {/* Name */}
-                    <div className="form-control mb-6">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                    </label>
-                    <input
-                        type="text"
-                        name="username"
-                        value={editedUser?.username || ""}
-                        onChange={handleInputChange}
-                        className="input input-bordered w-full"
-                        readOnly={!isEditing}
-                    />
-                    </div>
+                    <div className="card border border-base-300 shadow-sm p-6">
+                        {/* Name */}
+                        <div className="form-control mb-6">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="username"
+                                value={editedUser?.username || ""}
+                                onChange={handleInputChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditing}
+                            />
+                        </div>
 
-                    {/* Email */}
-                    <div className="form-control mb-6">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={editedUser?.email || ""}
-                        onChange={handleInputChange}
-                        className="input input-bordered w-full"
-                        readOnly={!isEditing}
-                    />
-                    </div>
+                        {/* Email */}
+                        <div className="form-control mb-6">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={editedUser?.email || ""}
+                                onChange={handleInputChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditing}
+                            />
+                        </div>
 
-                    {/* Phone */}
-                    <div className="form-control mb-6">
-                    <label className="label">
-                        <span className="label-text">Phone</span>
-                    </label>
-                    <input
-                        type="tel"
-                        name="phone"
-                        value={editedUser?.phone || ""}
-                        onChange={handleInputChange}
-                        className="input input-bordered w-full"
-                        readOnly={!isEditing}
-                    />
-                    </div>
+                        {/* Phone */}
+                        <div className="form-control mb-6">
+                            <label className="label">
+                                <span className="label-text">Phone</span>
+                            </label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                value={editedUser?.phone || ""}
+                                onChange={handleInputChange}
+                                className="input input-bordered w-full"
+                                readOnly={!isEditing}
+                            />
+                        </div>
 
-                    {/* Buttons */}
-                    <div className="flex justify-end space-x-4">
-                    {isEditing ? (
-                        <>
-                        <button onClick={handleCancelClick} className="btn btn-ghost">
-                            Cancel
-                        </button>
-                        <button onClick={handleSaveClick} className="btn btn-primary">
-                            Save
-                        </button>
-                        </>
-                    ) : (
-                        <button onClick={() => setIsEditing(true)} className="btn btn-outline btn-primary">
-                        Edit Profile
-                        </button>
-                    )}
+                        {/* Buttons */}
+                        <div className="flex justify-end space-x-4">
+                            {isEditing ? (
+                                <>
+                                    <button onClick={handleCancelClick} className="btn btn-ghost">
+                                        Cancel
+                                    </button>
+                                    <button onClick={handleSave} className="btn btn-primary">
+                                        Save
+                                    </button>
+                                </>
+                            ) : (
+                                <button onClick={() => setIsEditing(true)} className="btn btn-outline btn-primary">
+                                    Edit Profile
+                                </button>
+                            )}
+                        </div>
                     </div>
-                </div>
                 </section>
             </div>
         </>

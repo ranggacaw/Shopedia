@@ -54,7 +54,7 @@ const ItemDetailsPage = () => {
                         <img
                             src={product.image}
                             alt={product.name}
-                            className="rounded-lg w-full"
+                            className="rounded-lg w-full aspect-square"
                         />
                     </div>
 
@@ -90,13 +90,13 @@ const ItemDetailsPage = () => {
                             <div className="flex space-x-2">
                                 {product.sizes.map((size) => (
                                     <button
-                                    key={size}
-                                    onClick={() => setSelectedSize(size)}
-                                    className={`btn btn-sm ${
-                                        selectedSize === size ? "btn-primary" : "btn-ghost"
-                                    }`}
+                                        key={size}
+                                        onClick={() => setSelectedSize(size)}
+                                        className={`btn btn-sm ${
+                                            selectedSize === size ? "btn-primary" : "btn-ghost"
+                                        }`}
                                     >
-                                    {size}
+                                        {size}
                                     </button>
                                 ))}
                             </div>

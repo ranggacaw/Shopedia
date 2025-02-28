@@ -20,7 +20,7 @@ const ContactUs = () => {
             {/* Contact Form and Information Section */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-8 py-16">
                 {/* Contact Form */}
-                <div className="card border border-base-300 shadow-sm p-6">
+                <div className="card shadow-md p-6">
                     <h2 className="text-2xl font-bold mb-4">Send Us a Message</h2>
                     <form className="space-y-4">
                         <div className="form-control">
@@ -61,7 +61,7 @@ const ContactUs = () => {
                 </div>
 
                 {/* Contact Information */}
-                <div className="card border border-base-300 shadow-sm p-6">
+                <div className="card p-6">
                     <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
                     <div className="space-y-6">
                         {/* Address */}
@@ -103,7 +103,7 @@ const ContactUs = () => {
             {/* Map Section */}
             <section className="py-16">
                 <h2 className="text-3xl font-bold text-center mb-8">Our Location</h2>
-                <div className="card border border-base-300 shadow-sm p-6">
+                <div className="card shadow-md p-6">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.284822038009!2d106.99850147499035!3d-6.226127593761956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698c71cf814d97%3A0xd22a5d56809f070a!2sSummarecon%20Mall%20Bekasi!5e0!3m2!1sen!2sid!4v1739678088020!5m2!1sen!2sid"
                         width="100%"

@@ -3,6 +3,7 @@ import HomeLayout from "./dashboard/homewrapper";
 import Link from "next/link";
 import { FaHome, FaLaptop, FaTshirt } from "react-icons/fa";
 import { TbPerfume } from "react-icons/tb";
+import products from "@/data/shopdata";
 
 const HomePage: React.FC = () => {
     const categories = [
@@ -15,13 +16,11 @@ const HomePage: React.FC = () => {
     return (
         <HomeLayout>
             {/* Hero Section */}
-            <section className="bg-base-200 py-16 bg-[url('https://cdn.prod.website-files.com/605826c62e8de87de744596e/63f5e30a4d577354fdfce512_Duotone-Master-ssssFile-copy.jpg')] bg-cover bg-no-repeat bg-center">
+            <section className="bg-base-200 py-20 bg-[url('https://cdn.prod.website-files.com/605826c62e8de87de744596e/63f5e30a4d577354fdfce512_Duotone-Master-ssssFile-copy.jpg')] bg-cover bg-no-repeat bg-center">
                 <div className="container mx-auto text-center">
                     <h2 className="text-5xl font-bold mb-4 text-slate-200">Welcome to Shopedia</h2>
                     <p className="text-lg mb-8 text-slate-200">Your one-stop shop for the best products at the best prices.</p>
-                    {/* <button className="btn btn-primary">Shop Now</button> */}
-                    
-                    <a className="group relative inline-block focus:ring-3 focus:outline-hidden" href="#">
+                    <a className="group relative inline-block focus:ring-3 focus:outline-hidden" href="/shop">
                         <span
                             className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-yellow-300 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
                         ></span>
@@ -36,24 +35,25 @@ const HomePage: React.FC = () => {
             </section>
 
             {/* Featured Products */}
-            <section className="container mx-auto py-16">
+            <section className="container max-w-6xl mx-auto py-16">
                 <h3 className="text-3xl font-bold text-center mb-8">Featured Products</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[1, 2, 3].map((product) => (
+                {products.slice(0, 3).map((product) => (
                     <div 
-                        key={product} 
+                        key={product.id} 
                         className="card bg-base-100 shadow-md"
                     >
                         <figure className="px-4 pt-4">
                             <img
-                                src="https://placehold.co/300"
+                                src={product.image}
                                 alt="Product"
-                                className="rounded-xl"
+                                className="rounded-xl object-cover"
+                                style={{height:'300px', width: '400px'}}
                             />
                         </figure>
                         <div className="card-body">
-                            <h4 className="card-title">Product {product}</h4>
-                            <p className="text-gray-500">115.000 IDR</p>
+                            <h4 className="card-title">{product.name}</h4>
+                            <p className="text-gray-500">{product.price}</p>
                             <div className="card-actions justify-end">
                                 <button className="btn btn-primary">Add to Cart</button>
                             </div>
