@@ -1,22 +1,15 @@
 import React from "react";
 import HomeLayout from "./dashboard/homewrapper";
 import Link from "next/link";
-import { FaHome, FaLaptop, FaTshirt } from "react-icons/fa";
-import { TbPerfume } from "react-icons/tb";
 import products from "@/data/shopdata";
+import categories from "@/data/categoriesdata";
 
 const HomePage: React.FC = () => {
-    const categories = [
-        { name: "Electronics", icon: <FaLaptop className="w-6 h-5 mb-1" /> },
-        { name: "Clothing", icon: <FaTshirt className="w-6 h-5 mb-1" /> },
-        { name: "Home & Kitchen", icon: <FaHome className="w-6 h-5 mb-1" /> },
-        { name: "Fragrance", icon: <TbPerfume className="w-6 h-5 mb-1" /> },
-    ];
 
     return (
         <HomeLayout>
             {/* Hero Section */}
-            <section className="bg-base-200 py-20 bg-[url('https://cdn.prod.website-files.com/605826c62e8de87de744596e/63f5e30a4d577354fdfce512_Duotone-Master-ssssFile-copy.jpg')] bg-cover bg-no-repeat bg-center">
+            <section className="bg-base-200 py-20 bg-[url('https://wishfarms.com/wp-content/uploads/2020/02/mixed-berry-basket-bg.jpg')] bg-cover bg-no-repeat bg-center">
                 <div className="container mx-auto text-center">
                     <h2 className="text-5xl font-bold mb-4 text-slate-200">Welcome to Shopedia</h2>
                     <p className="text-lg mb-8 text-slate-200">Your one-stop shop for the best products at the best prices.</p>
@@ -35,10 +28,10 @@ const HomePage: React.FC = () => {
             </section>
 
             {/* Featured Products */}
-            <section className="container max-w-6xl mx-auto py-16">
+            <section className="container max-w-7xl mx-auto py-16">
                 <h3 className="text-3xl font-bold text-center mb-8">Featured Products</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {products.slice(0, 3).map((product) => (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                {products.slice(0, 4).map((product) => (
                     <div 
                         key={product.id} 
                         className="card bg-base-100 shadow-md"
@@ -47,13 +40,12 @@ const HomePage: React.FC = () => {
                             <img
                                 src={product.image}
                                 alt="Product"
-                                className="rounded-xl object-cover"
-                                style={{height:'300px', width: '400px'}}
+                                className="rounded-xl object-cover aspect-square max-w-52"
                             />
                         </figure>
                         <div className="card-body">
                             <h4 className="card-title">{product.name}</h4>
-                            <p className="text-gray-500">{product.price}</p>
+                            <p className="text-gray-500">{product.price} IDR</p>
                             <div className="card-actions justify-end">
                                 <button className="btn btn-primary">Add to Cart</button>
                             </div>
@@ -67,7 +59,7 @@ const HomePage: React.FC = () => {
             <section className="bg-base-100 py-16">
                 <div className="container mx-auto text-center">
                     <h3 className="text-3xl font-bold mb-8">Shop by Category</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-3 md:grid-cols-6 gap-6 px-6">
                     {categories.map((category) => (
                         <Link
                             key={category.name}
@@ -86,6 +78,35 @@ const HomePage: React.FC = () => {
                             </div>
                         </Link>
                     ))}
+                    </div>
+                </div>
+            </section>
+            
+            {/* Sale Hero */}
+            <section className="container mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-6">
+                    {/* Hero Section */}
+                    <div className="hero min-h-[30vh] rounded-xl" style={{ backgroundImage: 'url(https://img.freepik.com/free-photo/circular-candy-compositions-space_23-2147663196.jpg)' }}>
+                        <div className="hero-overlay bg-opacity-40 rounded-xl"></div>
+                        <div className="hero-content text-neutral-content">
+                        <div className="max-w-md">
+                            <h1 className="mb-5 text-4xl">Testy Snack & Fastfood</h1>
+                            <p className="mb-5">The Flavor Of Something Special</p>
+                            <button className="btn btn-primary">Shop Now</button>
+                        </div>
+                        </div>
+                    </div>
+
+                    {/* Fresh Fruits & Veggies Section */}
+                    <div className="hero min-h-[30vh] rounded-xl" style={{ backgroundImage: 'url(https://static.vecteezy.com/system/resources/thumbnails/033/107/945/small_2x/fresh-fruits-food-background-web-banner-with-copy-space-generative-ai-photo.jpg)' }}>
+                        <div className="hero-overlay bg-opacity-40 rounded-xl"></div>
+                        <div className="hero-content text-neutral-content">
+                        <div className="max-w-md">
+                            <h1 className="mb-5 text-4xl">Fresh Fruits & Veggies</h1>
+                            <p className="mb-5">A Healthy Meal For Every One</p>
+                            <button className="btn btn-primary">Shop Now</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -2,7 +2,7 @@ const products = [
     {
         id: 1,
         name: "Wireless Headphones - Cap Capung",
-        price: 99.000,
+        price: 99.999,
         image: "https://static.independent.co.uk/2024/10/30/12/Wireless-headphones.jpg?width=1200&height=1200&fit=crop",
         category: "Electronics",
     },
