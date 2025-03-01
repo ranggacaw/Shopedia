@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import categories from '@/data/categoriesdata';
 
 export default function Footer() {
   return (
@@ -18,10 +19,9 @@ export default function Footer() {
                 <div className='hidden sm:block'>
                     <h3 className="text-lg font-semibold mb-2">Categories</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><Link href="/category/food" className="hover:text-primary">Food</Link></li>
-                        <li><Link href="/category/clothing" className="hover:text-primary">Clothing</Link></li>
-                        <li><Link href="/category/electronics" className="hover:text-primary">Electronics</Link></li>
-                        <li><Link href="/category/home" className="hover:text-primary">Home & Living</Link></li>
+                        {categories.map((category) => (
+                            <li key={category.id}><Link href="#" className="hover:text-primary">{category.name}</Link></li>
+                        ))}
                     </ul>
                 </div>
 
