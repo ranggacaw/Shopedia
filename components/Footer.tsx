@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <>
         <footer className="py-10 border-t-slate-200 border-t text-base-content mt-3">
-            <div className="container px-4 grid grid-cols-1 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div className="container px-4 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 {/* Left Side: Logo & Description */}
                 <div>
                     <h2 className="text-2xl font-bold">Shopedia </h2>
@@ -15,7 +15,7 @@ export default function Footer() {
                 </div>
 
                 {/* Categories */}
-                <div>
+                <div className='hidden sm:block'>
                     <h3 className="text-lg font-semibold mb-2">Categories</h3>
                     <ul className="space-y-2 text-sm">
                         <li><Link href="/category/food" className="hover:text-primary">Food</Link></li>
@@ -26,7 +26,7 @@ export default function Footer() {
                 </div>
 
                 {/* Company */}
-                <div>
+                <div className='hidden sm:block'>
                     <h3 className="text-lg font-semibold mb-2">Company</h3>
                     <ul className="space-y-2 text-sm">
                         <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
@@ -57,7 +57,7 @@ export default function Footer() {
             </div>
         </footer>
         <div className="w-full mx-auto text-center mt-5 py-5 bg-gray-100">
-            <p>© 2025 Shopedia. No prophet. No god.</p>
+            <p>© 2025 Shopedia. No grandchild of prophet. Trust me.</p>
         </div>
     </>
   );

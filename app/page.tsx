@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
             </section>
 
             {/* Featured Products */}
-            <section className="container max-w-7xl mx-auto py-16">
+            <section className="container max-w-7xl mx-auto py-16 px-6">
                 <h3 className="text-3xl">Featured <span className="text-primary">Products</span></h3>
                 <p className="text-gray-400 mb-8">Dont wait. Just grab fast our featured products!</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -72,7 +72,7 @@ const HomePage: React.FC = () => {
                             />
                         </figure>
                         <div className="card-body pb-4">
-                            <p className="m-0 text-gray-400">Category</p>
+                            <p className="m-0 text-gray-400">{product.category}</p>
                             <h6 className="text-base">{product.name}</h6>
                             <p className="font-bold">{product.price} IDR</p>
                         </div>
@@ -116,7 +116,7 @@ const HomePage: React.FC = () => {
                 <p className="text-gray-400 mb-8">Let's checking out, guys and get free shipping!</p>
 
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-                {products.slice(0, 5).map((product) => (
+                {products.slice(3, 9).map((product) => (
                     <div 
                         key={product.id} 
                         className="card bg-base-100 shadow-md"
@@ -129,7 +129,7 @@ const HomePage: React.FC = () => {
                             />
                         </figure>
                         <div className="card-body pb-4">
-                            <p className="m-0 text-gray-400">Category</p>
+                            <p className="m-0 text-gray-400">{product.category}</p>
                             <h6 className="text-base">{product.name}</h6>
                             <p className="font-bold">{product.price} IDR</p>
                         </div>
@@ -141,7 +141,7 @@ const HomePage: React.FC = () => {
             {/* Services */}
             <section className="bg-base-100 py-16 pb-40">
                 <div className="container mx-auto text-center">
-                    <div className="grid grid-cols-3 md:grid-cols-3 gap-6 px-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
                     {services.map((category) => (
                         <Link
                             key={category.name}
