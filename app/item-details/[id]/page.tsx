@@ -1,5 +1,7 @@
 "use client"
 
+import FeaturedProduct from "@/components/FeaturedProduct";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SetStateAction, useState } from "react";
 import { FaStar, FaShoppingCart } from "react-icons/fa";
@@ -46,7 +48,6 @@ const ItemDetailsPage = () => {
     return (
         <>
             <Header />
-
             <div className="container mx-auto p-6">
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16">
                     {/* Product Image */}
@@ -156,6 +157,8 @@ const ItemDetailsPage = () => {
                     </div>
                 </section>
             </div>
+            <FeaturedProduct />
+            <Footer />
         </>
     );
 };
