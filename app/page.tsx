@@ -2,9 +2,9 @@ import React from "react";
 import HomeLayout from "./dashboard/homewrapper";
 import Link from "next/link";
 import categories from "@/data/categoriesdata";
-import products from "@/data/shopdata";
 import services from "@/data/servicesdata";
 import FeaturedProduct from "@/components/FeaturedProduct";
+import NewArrival from "@/components/NewArrival";
 
 const HomePage: React.FC = () => {
 
@@ -88,32 +88,7 @@ const HomePage: React.FC = () => {
             </section>
 
             {/* New Arrivals */}
-            <section className="container mx-auto py-16 px-6">
-                <h3 className="text-3xl">New <span className="text-primary">Arrivals</span></h3>
-                <p className="text-gray-400 mb-8">Let's checking out, guys and get free shipping!</p>
-
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-                {products.slice(3, 9).map((product) => (
-                    <div 
-                        key={product.id} 
-                        className="card bg-base-100 shadow-md"
-                    >
-                        <figure className="px-4 pt-4">
-                            <img
-                                src={product.image}
-                                alt="Product"
-                                className="rounded-xl object-cover aspect-square max-w-52"
-                            />
-                        </figure>
-                        <div className="card-body pb-4">
-                            <p className="m-0 text-gray-400">{product.category}</p>
-                            <h6 className="text-base">{product.name}</h6>
-                            <p className="font-bold">{product.price} IDR</p>
-                        </div>
-                    </div>
-                ))}
-                </div>
-            </section>
+            <NewArrival />
 
             {/* Services */}
             <section className="bg-base-100 py-16 pb-40">

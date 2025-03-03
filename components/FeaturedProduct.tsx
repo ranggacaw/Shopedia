@@ -14,6 +14,7 @@ interface Product {
     id: number;
     name: string;
     category: string;
+    price: number;
     description: string;
     images: Image[];
 }
@@ -33,6 +34,10 @@ const FeaturedProduct: React.FC = () => {
 
         fetchProducts();
     }, []);
+
+    const formatPrice = (price: number): string => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
 
     return (
         <section className="container max-w-7xl mx-auto py-16 px-6">
@@ -59,9 +64,9 @@ const FeaturedProduct: React.FC = () => {
                             />
 
                             {/* Info Produk */}
-                            <h4 className="text-lg font-bold mt-4">{product.name}</h4>
-                            <p className="text-sm text-gray-500">{product.category}</p>
-                            <p className="text-sm mt-2">{product.description.substring(0, 50)}...</p>
+                            <p className="text-sm text-gray-500 py-2">{product.category}</p>
+                            <p className="text-sm py-1">{product.name}</p>
+                            <p className="text-sm font-bold">Rp. {formatPrice(product.price)}</p>
                         </Link>
                     ))
                 ) : (

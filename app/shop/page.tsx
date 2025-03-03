@@ -1,16 +1,48 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiFilter } from "react-icons/bi";
 import Header from '@/components/Header';
-import products from '@/data/shopdata'
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import axios from 'axios';
 
+interface Image {
+    id: number;
+    url: string;
+    productId: number;
+}
+
+interface Product {
+    id: number;
+    name: string;
+    category: string;
+    price: number;
+    description: string;
+    images: Image[];
+}
 
 const ShopPage = () => {
+    const [products, setProducts] = useState<Product[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/product');
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        }
+
+        fetchProduct();
+    }, [])
+
+    const formatPrice = (price: number): string => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
     
     // Search product
     const filteredProducts = products.filter((product) => {
@@ -101,7 +133,7 @@ const ShopPage = () => {
                     </div>
 
                     {/* Product Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {filteredProducts.map((product) => (
                         <Link 
                                 key={product.id} 
@@ -110,7 +142,7 @@ const ShopPage = () => {
                             >
                                 <figure className="px-4 pt-4">
                                     <img
-                                        src={product.image}
+                                        src={product.images.length > 0 ? product.images[0].url : "https://via.placeholder.com/150"}
                                         alt={product.name}
                                         className="rounded-xl w-full aspect-square object-cover"
                                     />
@@ -118,10 +150,10 @@ const ShopPage = () => {
                                 
                                 {/* Details */}
                                 <div className="card-body px-4 py-2">
-                                    <p className="m-0 text-gray-400 text-sm">{product.category}</p>
+                                    <p className="m-0 text-gray-400">{product.category}</p>
                                     <h6 className="text-base">{product.name}</h6>
                                     <div className="flex justify-between items-center">
-                                        <p className="text-gray-600 font-medium">{product.price.toFixed(3)} IDR</p>
+                                        <p className="font-bold">Rp. {formatPrice(product.price)}</p>
                                         <button className="btn btn-xs btn-outline btn-primary">
                                             Add to Cart
                                         </button>
