@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiCart } from 'react-icons/bi';
-import { CgSearch } from 'react-icons/cg';
 import { FaBars } from 'react-icons/fa';
 
 interface User {
@@ -39,7 +38,7 @@ const Header = () => {
     }
 
     return (
-        <header className="shadow-md border-b">
+        <header className="shadow-md border-b sticky top-0 z-10 bg-gray-50">
             <div className="container mx-auto p-4 flex justify-between items-center">
                 {/* Logo */}
                 <div className="text-2xl font-bold font-logo w-1/3 text-left">Shopedia</div>
