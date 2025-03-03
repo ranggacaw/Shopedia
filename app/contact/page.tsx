@@ -1,8 +1,55 @@
+"use client"
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import axios from "axios";
+import { useState } from "react";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
+import Swal from "sweetalert2";
 
-const ContactUs = () => {
+const ContactUs: React.FC = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('')
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        if (!email || !name || !message) {
+            Swal.fire({
+                title: "fill the form correctly to send message!",
+                icon: "warning",
+            });
+            console.log({ name, email, message });
+            return;
+        }
+
+        const sendmessage = {
+            name,
+            email,
+            message
+        }
+
+        try {
+            const response = await axios.post('http://localhost:3001/shopedia/contact-us', sendmessage);
+            console.log('post success', response.data);
+
+            Swal.fire({
+                title: "Message sent successfully!",
+                icon: "success"
+            });
+
+            setName('');
+            setEmail('');
+            setMessage('');
+            
+        } catch (error) {
+            console.log(sendmessage);
+            console.error('Backend response error:', error);
+        }
+
+    }
+
     return (
         <>
         <Header />
@@ -22,7 +69,7 @@ const ContactUs = () => {
                 {/* Contact Form */}
                 <div className="card shadow-md p-6">
                     <h2 className="text-2xl font-bold mb-4">Send Us a Message</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit} method="post">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
@@ -31,6 +78,8 @@ const ContactUs = () => {
                                 type="text"
                                 placeholder="Enter your name"
                                 className="input input-bordered w-full"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </div>
                         <div className="form-control">
@@ -41,6 +90,8 @@ const ContactUs = () => {
                                 type="email"
                                 placeholder="Enter your email"
                                 className="input input-bordered w-full"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="form-control">
@@ -50,6 +101,8 @@ const ContactUs = () => {
                             <textarea
                                 placeholder="Enter your message"
                                 className="textarea textarea-bordered w-full h-32"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
                             />
                         </div>
                         <div className="form-control">

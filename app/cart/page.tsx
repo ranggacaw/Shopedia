@@ -1,4 +1,6 @@
 "use client"
+import FeaturedProduct from '@/components/FeaturedProduct';
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import React, { useState } from 'react'
 import { FaTrash } from "react-icons/fa";
@@ -52,14 +54,11 @@ const CartPage = () => {
     return (
         <>
             <Header />
-            
             <div className="container mx-auto p-6">
                 {/* Cart Header */}
-                <section className="text-center py-8">
-                    <h1 className="text-4xl font-bold mb-4">Your Cart</h1>
-                    <p className="text-lg text-gray-600">
-                    Review your items and proceed to checkout.
-                    </p>
+                <section className="py-8">
+                    <h3 className="text-3xl">Your <span className="text-primary">Cart</span></h3>
+                    <p className="text-gray-400 mb-8">Review your items and proceed to checkout.</p>
                 </section>
 
                 {/* Cart Items */}
@@ -145,6 +144,8 @@ const CartPage = () => {
                     </div>
                 </section>
             </div>
+            <FeaturedProduct />
+            <Footer />
         </>
     );
 };
