@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Shopedia',
     short_name: 'Shopedia',
-    description: 'You will get any fresh thing here.',
+    description: 'You will get anything fresh here.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

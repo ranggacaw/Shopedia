@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     title: "Shopedia",
-    description: "God is never exist, he just story. Trust me.",
+    description: "You will get anything fresh here.",
 };
 
 export default function RootLayout({
