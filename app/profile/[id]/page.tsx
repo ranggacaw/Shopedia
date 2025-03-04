@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -14,19 +14,14 @@ interface User {
 }
 
 const ProfilePage = () => {
-  
     const { id } = useParams();
-    const userId = Number(id);
-    const router = useRouter();
-
-    const [token, setToken] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [user, setUser] = useState<User | null>(null);
     const [editedUser, setEditedUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Fetch token and user data
+    // Fetch user data
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (!storedToken) {
@@ -35,19 +30,16 @@ const ProfilePage = () => {
             return;
         }
 
-        setToken(storedToken);
-
-        if (isNaN(userId)) {
+        if (!id || isNaN(Number(id))) {
             setError("Invalid user ID.");
             setLoading(false);
-            console.error("Invalid user ID:", id);
             return;
         }
 
         const fetchUser = async () => {
             try {
                 const response = await fetch(`http://localhost:3001/auth/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${storedToken}` },
                 });
 
                 if (!response.ok) throw new Error("Failed to fetch user details");
@@ -55,7 +47,7 @@ const ProfilePage = () => {
                 const data: User = await response.json();
                 setUser(data);
                 setEditedUser(data);
-            } catch (err) {
+            } catch {
                 setError("Failed to load user details.");
             } finally {
                 setLoading(false);
@@ -63,26 +55,27 @@ const ProfilePage = () => {
         };
 
         fetchUser();
-    }, [userId]);
+    }, [id]);
 
     // Handle input changes
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!editedUser) return;
-        const { name, value } = e.target;
-        setEditedUser({ ...editedUser, [name]: value });
+        setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
     };
 
     // Save updated user details
     const handleSave = async () => {
-        if (!token || !editedUser) return;
+        if (!editedUser) return;
 
         try {
-            const response = await fetch(`http://localhost:3001/auth/${userId}`, 
-            {
+            const storedToken = localStorage.getItem("token");
+            if (!storedToken) throw new Error("No token found");
+
+            const response = await fetch(`http://localhost:3001/auth/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${storedToken}`,
                 },
                 body: JSON.stringify(editedUser),
             });
@@ -98,7 +91,7 @@ const ProfilePage = () => {
                 title: "Success",
                 text: "User details updated successfully!",
             });
-        } catch (error) {
+        } catch {
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -117,11 +110,8 @@ const ProfilePage = () => {
     if (loading) return <div>Loading...</div>;
 
     // Error state
-    if (error) {
-        return <div className="text-center text-red-500">{error}</div>;
-    }
+    if (error) return <div className="text-center text-red-500">{error}</div>;
 
-    // User data loaded successfully
     return (
         <>
             <Header />
@@ -192,7 +182,10 @@ const ProfilePage = () => {
                                     </button>
                                 </>
                             ) : (
-                                <button onClick={() => setIsEditing(true)} className="btn btn-outline btn-primary">
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="btn btn-outline btn-primary"
+                                >
                                     Edit Profile
                                 </button>
                             )}

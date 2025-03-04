@@ -2,6 +2,7 @@
 import FeaturedProduct from '@/components/FeaturedProduct';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import Image from 'next/image';
 import React, { useState } from 'react'
 import { FaTrash } from "react-icons/fa";
 
@@ -78,10 +79,13 @@ const CartPage = () => {
                                         {/* Product Image */}
                                         <div className="avatar">
                                             <div className="w-24 h-24 rounded-lg">
-                                                <img
+                                                <Image
                                                     src={item.image}
                                                     alt={item.name}
                                                     className="rounded-lg"
+                                                    width={100}
+                                                    height={100}
+                                                    unoptimized
                                                 />
                                             </div>
                                         </div>

@@ -10,13 +10,12 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            setIsLoggedIn(true);
+            router.push('/');
         }
     }, []);
 
@@ -35,7 +34,6 @@ const Login: React.FC = () => {
                 localStorage.setItem("token", token);
                 localStorage.setItem("user", JSON.stringify(user)); // save user details
     
-                setIsLoggedIn(true);
     
                 Swal.fire({
                     title: "Login Success!",
@@ -98,7 +96,7 @@ const Login: React.FC = () => {
 
                         <div className="text-center mt-4">
                             <p className="text-sm text-gray-600">
-                                Don't have an account?{' '}
+                                Don&apos;t have an account?{' '}
                                 <a href="/register" className="link link-primary">
                                     Sign up
                                 </a>

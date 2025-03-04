@@ -3,6 +3,7 @@
 import FeaturedProduct from "@/components/FeaturedProduct";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import { FaStar, FaShoppingCart } from "react-icons/fa";
 
@@ -52,10 +53,13 @@ const ItemDetailsPage = () => {
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16">
                     {/* Product Image */}
                     <div className="card border border-base-300 shadow-sm p-4">
-                        <img
+                        <Image
                             src={product.image}
                             alt={product.name}
                             className="rounded-lg w-full aspect-square"
+                            width={100}
+                            height={100}
+                            unoptimized
                         />
                     </div>
 

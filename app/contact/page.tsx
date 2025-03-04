@@ -59,7 +59,7 @@ const ContactUs: React.FC = () => {
             <section className="text-center py-16">
                 <h1 className="text-5xl font-bold mb-4">Contact Us</h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                    We'd love to hear from you! Whether you have a question, feedback, or
+                    We&apos;d love to hear from you! Whether you have a question, feedback, or
                     just want to say hello, feel free to reach out.
                 </p>
             </section>

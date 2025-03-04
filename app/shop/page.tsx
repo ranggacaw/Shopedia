@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import axios from 'axios';
+import Image from 'next/image';
 
 interface Image {
     id: number;
@@ -141,9 +142,12 @@ const ShopPage = () => {
                                 href={`http://localhost:3000/item-details/1`}
                             >
                                 <figure className="px-4 pt-4">
-                                    <img
+                                    <Image
                                         src={product.images.length > 0 ? product.images[0].url : "https://via.placeholder.com/150"}
                                         alt={product.name}
+                                        width={300}
+                                        height={300}
+                                        unoptimized
                                         className="rounded-xl w-full aspect-square object-cover"
                                     />
                                 </figure>
