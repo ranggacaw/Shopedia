@@ -1,6 +1,7 @@
 "use client"
 
 import axios from 'axios'
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 
 interface Image {
@@ -41,7 +42,7 @@ const NewArrival: React.FC = () => {
     return (
         <section className="container mx-auto py-16 px-6">
             <h3 className="text-3xl">New <span className="text-primary">Arrivals</span></h3>
-            <p className="text-gray-400 mb-8">Let's checking out and get free shipping!</p>
+            <p className="text-gray-400 mb-8">Let&apos;s checking out and get free shipping!</p>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {products.slice(3, 8).map((product) => (
@@ -51,9 +52,12 @@ const NewArrival: React.FC = () => {
                 >
                     <figure className="px-4 pt-4">
                         {/* Gambar Produk */}
-                        <img
+                        <Image
                             src={product.images.length > 0 ? product.images[0].url : "https://via.placeholder.com/150"}
                             alt={product.name}
+                            width={300}
+                            height={300}
+                            unoptimized
                             className="rounded-xl object-cover aspect-square max-w-52"
                         />
                     </figure>

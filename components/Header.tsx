@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -59,8 +60,14 @@ const Header = () => {
                     {/* Avatar with Dropdown */}
                     <div className="relative">
                         <div className="avatar cursor-pointer" onClick={() => setDropdownOpen(!dropdownOpen)}>
-                            <div className="w-10 rounded-full">
-                                <img src="https://placehold.co/100" alt="User Avatar" />
+                            <div className="w-7 rounded-full">
+                                <Image 
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" 
+                                    alt="User Avatar" 
+                                    width={300}
+                                    height={300}
+                                    unoptimized
+                                />
                             </div>
                         </div>
                         {dropdownOpen && (
