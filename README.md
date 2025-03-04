@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org) project using Typescript with [DaisyUI](https://daisyui.com/) and [Tailwindcss](https://tailwindcss.com/) for styling.
+This is a PWA [Next.js](https://nextjs.org) project using Typescript with [DaisyUI](https://daisyui.com/) and [Tailwindcss](https://tailwindcss.com/) for styling.
+
 ![image](https://github.com/user-attachments/assets/016b7bc7-f722-49f2-a4bc-f8fd8780bf08)
 
 To fill my time, I made this mini eCommerce with following features:
