@@ -20,6 +20,7 @@ const CheckoutPage = () => {
             }
         } catch (error) {
             Swal.fire("Payment Failed", "Please try again", "error");
+            console.error('Backend response error:', error);
         }
     };
 

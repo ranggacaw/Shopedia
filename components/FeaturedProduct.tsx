@@ -21,16 +21,6 @@ interface Product {
     images: ImageType[];
 }
 
-type CartItem = {
-    id: number;
-    name: string;
-    category: string;
-    price: number;
-    description: string;
-    images: { url: string }[];
-    quantity: number;
-};
-
 const QuantitySelector = ({
     quantity,
     onIncrease,
@@ -177,11 +167,9 @@ const FeaturedProduct: React.FC = () => {
                                             addToCart({
                                                 id: selectedProduct.id,
                                                 name: selectedProduct.name,
-                                                category: selectedProduct.category,
                                                 price: selectedProduct.price,
-                                                description: selectedProduct.description,
-                                                images: selectedProduct.images,
-                                                quantity: quantity, // ✅ Ensure quantity is included
+                                                quantity: quantity,
+                                                image: ""
                                             });
                                             closeModal();
                                         }}

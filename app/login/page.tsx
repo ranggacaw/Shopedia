@@ -17,7 +17,7 @@ const Login: React.FC = () => {
         if (token) {
             router.push('/');
         }
-    }, []);
+    }, [router]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

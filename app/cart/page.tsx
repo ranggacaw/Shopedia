@@ -8,7 +8,7 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 
 const CartPage = () => {
-    const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
+    const { cart, updateQuantity, removeFromCart } = useCart();
 
     // Calculate total price
     const totalPrice = cart.reduce(
