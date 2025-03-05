@@ -29,9 +29,6 @@ export default function Footer() {
                 <div className='hidden sm:block'>
                     <h3 className="text-lg font-semibold mb-2">Company</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
-                        <li><Link href="/blog" className="hover:text-primary">Blog</Link></li>
-                        <li><Link href="/careers" className="hover:text-primary">Careers</Link></li>
                         <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
                     </ul>
                 </div>
