@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import Image from "next/image";
+import { useCart } from "./CartProvider";
 
-interface Image {
+interface ImageType {
     id: number;
     url: string;
     productId: number;
@@ -17,8 +18,18 @@ interface Product {
     category: string;
     price: number;
     description: string;
-    images: Image[];
+    images: ImageType[];
 }
+
+type CartItem = {
+    id: number;
+    name: string;
+    category: string;
+    price: number;
+    description: string;
+    images: { url: string }[];
+    quantity: number;
+};
 
 const QuantitySelector = ({
     quantity,
@@ -43,6 +54,7 @@ const QuantitySelector = ({
 };
 
 const FeaturedProduct: React.FC = () => {
+    const { addToCart } = useCart();
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
@@ -159,7 +171,23 @@ const FeaturedProduct: React.FC = () => {
 
                                 {/* Modal Footer */}
                                 <div className="modal-action mt-6 flex gap-4 sticky bottom-0 bg-white">
-                                    <button className="btn btn-primary flex-1">Add to Cart</button>
+                                    <button
+                                        className="btn btn-primary flex-1"
+                                        onClick={() => {
+                                            addToCart({
+                                                id: selectedProduct.id,
+                                                name: selectedProduct.name,
+                                                category: selectedProduct.category,
+                                                price: selectedProduct.price,
+                                                description: selectedProduct.description,
+                                                images: selectedProduct.images,
+                                                quantity: quantity, // ✅ Ensure quantity is included
+                                            });
+                                            closeModal();
+                                        }}
+                                    >
+                                        Add to Cart
+                                    </button>
                                     <button className="btn flex-1" onClick={closeModal}>
                                         Close
                                     </button>

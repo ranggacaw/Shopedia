@@ -53,7 +53,7 @@ const Header = () => {
 
                 {/* Search, Cart, and Avatar */}
                 <div className="flex items-center space-x-4 w-1/3 justify-end">
-                    <Link href={"/cart"} className="btn btn-ghost">
+                    <Link href={"/cart"} className="btn btn-ghost hover:text-primary hover:bg-transparent">
                         <BiCart /> Cart
                     </Link>
 
