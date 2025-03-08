@@ -31,7 +31,7 @@ const Header = () => {
             setUser(JSON.parse(storedUser)); 
         }
     }, []);
-
+    
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');

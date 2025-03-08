@@ -4,11 +4,22 @@ import FeaturedProduct from "@/components/FeaturedProduct";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const CartPage = () => {
+    const [token, setToken] = useState<string | null>(null);
     const { cart, updateQuantity, removeFromCart } = useCart();
+    const router = useRouter();
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
 
     // Calculate total price
     const totalPrice = cart.reduce(
@@ -30,6 +41,62 @@ const CartPage = () => {
             minimumFractionDigits: 0,
         }).format(price);
     };
+
+    // Handlecheckout
+    const handleCheckout = async () => {
+        if (cart.length === 0) {
+            Swal.fire("Empty Cart", "Your cart is empty.", "warning");
+            return;
+        }
+    
+        // Fetch token properly
+        const storedToken = localStorage.getItem("token");
+        if (!storedToken) {
+            Swal.fire("Login Required", "Please log in to proceed.", "warning");
+            router.push("/login");
+            return;
+        }
+    
+        try {
+            console.log("Sending token:", storedToken); // Debugging token
+    
+            const response = await fetch("http://localhost:3001/product/checkout", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${storedToken}` 
+                },
+                body: JSON.stringify({ userId: 1, cart }), // Use actual userId
+            });
+    
+            const data = await response.json();
+            console.log("Server response:", data); // Debug response
+    
+            if (data.success) {
+                Swal.fire("Success", "Transaction successful!", "success");
+            } else if (data.message === "Invalid token") {
+                console.warn("Invalid token detected, logging out user...");
+                
+                // Prevent infinite login loop
+                localStorage.removeItem("token");
+                Swal.fire({
+                    title: "Session Expired",
+                    text: "Your session has expired. Please log in again.",
+                    icon: "error",
+                    allowOutsideClick: false, // Prevents accidental closing
+                }).then(() => {
+                    router.push("/login");
+                });
+            } else {
+                Swal.fire("Transaction Failed", "Something went wrong.", "error");
+            }
+        } catch (error) {
+            console.error("Checkout error:", error);
+            Swal.fire("Error", "An error occurred. Please try again.", "error");
+        }
+    };
+    
+    
 
     return (
         <>
@@ -127,7 +194,10 @@ const CartPage = () => {
                             </div>
 
                             {/* Checkout Button */}
-                            <button className="btn btn-primary w-full mt-6">
+                            <button 
+                                className="btn btn-primary w-full mt-6"
+                                onClick={handleCheckout}
+                            >
                                 Proceed to Checkout
                             </button>
                         </div>
