@@ -86,6 +86,13 @@ const FeaturedProduct: React.FC = () => {
                 Don&apos;t wait. Just grab fast our featured products!
             </p>
 
+            {/* Show Cart Count in Navbar */}
+            {/* <div className="flex justify-end mb-4">
+                <button className="btn btn-primary">
+                    Cart ({getCartItemCount()})
+                </button>
+            </div> */}
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {products.length > 0 ? (
                     products.slice(0, 4).map((product) => (

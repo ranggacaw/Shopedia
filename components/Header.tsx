@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiCart } from 'react-icons/bi';
 import { FaBars } from 'react-icons/fa';
+import { useCart } from './CartProvider';
 
 interface User {
     id: number;
@@ -14,6 +15,7 @@ interface User {
 }
 
 const Header = () => {
+    const { getCartItemCount } = useCart();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null); 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -53,8 +55,11 @@ const Header = () => {
 
                 {/* Search, Cart, and Avatar */}
                 <div className="flex items-center space-x-4 w-1/3 justify-end">
-                    <Link href={"/cart"} className="btn btn-ghost hover:text-primary hover:bg-transparent">
+                    <Link href={"/cart"} className="btn btn-ghost hover:text-primary hover:bg-transparent relative">
                         <BiCart /> Cart
+                        <span className="badge badge-sm badge-primary absolute top-1 right-0">
+                            {getCartItemCount()}
+                        </span>
                     </Link>
 
                     {/* Avatar with Dropdown */}

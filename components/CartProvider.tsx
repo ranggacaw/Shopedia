@@ -1,68 +1,78 @@
-"use client"
+"use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type CartItem = {
+interface CartItem {
     id: number;
     name: string;
-    image: string;
     price: number;
     quantity: number;
-};
+    image: string;
+}
 
-type CartContextType = {
+interface CartContextType {
     cart: CartItem[];
     addToCart: (item: CartItem) => void;
+    getCartItemCount: () => number;
     removeFromCart: (id: number) => void;
-    updateQuantity: (id: number, quantity: number) => void; // Add this
+    updateQuantity: (id: number, quantity: number) => void;
     clearCart: () => void;
-};
+}
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    // Add this function
-    const updateQuantity = (id: number, quantity: number) => {
-        setCart((prevCart) =>
-            prevCart.map((item) =>
-                item.id === id ? { ...item, quantity } : item
-            )
-        );
-    };
-
+    // Add to cart (updates quantity if item exists)
     const addToCart = (item: CartItem) => {
         setCart((prevCart) => {
-            const existingItem = prevCart.find((i) => i.id === item.id);
+            const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+
             if (existingItem) {
-                return prevCart.map((i) =>
-                    i.id === item.id
-                        ? { ...i, quantity: i.quantity + item.quantity } // Properly increment quantity
-                        : i
+                return prevCart.map((cartItem) =>
+                    cartItem.id === item.id
+                        ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+                        : cartItem
                 );
+            } else {
+                return [...prevCart, item];
             }
-            return [...prevCart, { ...item, quantity: item.quantity ?? 1 }]; // Ensure quantity is always set
         });
     };
-    
-    
 
+    // Get total number of items in the cart
+    const getCartItemCount = () => {
+        return cart.reduce((total, item) => total + item.quantity, 0);
+    };
+
+    // Remove item from cart
     const removeFromCart = (id: number) => {
         setCart((prevCart) => prevCart.filter((item) => item.id !== id));
     };
 
-    const clearCart = () => setCart([]);
+    // Update item quantity
+    const updateQuantity = (id: number, quantity: number) => {
+        setCart((prevCart) =>
+            prevCart.map((item) =>
+                item.id === id ? { ...item, quantity: Math.max(quantity, 1) } : item
+            )
+        );
+    };
+
+    // Clear all items from the cart
+    const clearCart = () => {
+        setCart([]);
+    };
 
     return (
-        <CartContext.Provider
-            value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}
-        >
+        <CartContext.Provider value={{ cart, addToCart, getCartItemCount, removeFromCart, updateQuantity, clearCart }}>
             {children}
         </CartContext.Provider>
     );
 };
 
+// Custom hook to use the cart
 export const useCart = () => {
     const context = useContext(CartContext);
     if (!context) {
